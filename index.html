@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Register for Beyond Plastics: The Seaweed Revolution event by Zerocircle.">
+    <title>Zerocircle Event</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Brand Colors */
+        :root {
+            --shell: #FFFFFF;
+            --oyster: #FFFAF2;
+            --moss: #E3EBB3;
+            --kelp: #A7BFA3;
+            --waves: #C5DAFA;
+            --algae: #80F4B1;
+            --reef: #F577F4;
+            --ocean: #0C00FF;
+            --seaweed: #363C2E;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: 'Epilogue', sans-serif;
+            color: var(--seaweed);
+            margin: 0;
+            padding: 0;
+            padding-top: 140px; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+            background-color: var(--seaweed);
+        }
+
+        /* Fading Background Image Layer */
+        .bg-layer {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100vw; 
+            height: 100vh;
+            background-image: url('bi.jpg'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        /* A subtle dark tint over the image so the bright cards pop more */
+        .bg-layer::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.2); 
+        }
+
+        .bg-layer.visible {
+            opacity: 1;
+        }
+
+        /* Frosted Glass Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: rgba(255, 250, 242, 0.85); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-sizing: border-box;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: height 0.3s ease, background-color 0.3s ease;
+        }
+
+        header.shrunk {
+            height: 75px;
+            background-color: rgba(255, 250, 242, 0.95);
+        }
+
+        /* Main Content - Converted to a Glass Card */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 30px;
+            max-width: 800px;
+            width: 90%;
+            box-sizing: border-box; /* Added to prevent overflow */
+            margin: 0 auto 40px;
+            
+            /* Glassmorphism card styling */
+            background-color: rgba(255, 250, 242, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out 0.5s, transform 1s ease-out 0.5s;
+        }
+
+        main.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .event-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            margin-top: 0;
+            line-height: 1.2;
+        }
+
+        .event-description {
+            font-size: 1.125rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 600px;
+            color: var(--seaweed);
+            opacity: 0.9;
+        }
+
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--kelp);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none; 
+        }
+
+        /* Footer - Also converted to a Glass Card */
+        footer {
+            background-color: rgba(255, 250, 242, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-sizing: border-box; /* Added to prevent overflow */
+            margin: 0 auto 60px;
+            
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out 0.8s, transform 1s ease-out 0.8s;
+        }
+        
+        footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-subtext {
+            font-size: 0.875rem;
+            color: var(--seaweed);
+            margin: 0 0 12px 0;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .brand-logo {
+            height: 40px; 
+            width: auto; 
+            display: block;
+            transition: height 0.3s ease; 
+        }
+
+        header.shrunk .brand-logo {
+            height: 28px; 
+        }
+
+        /* --- BUTTON BASE STYLES --- */
+        .luma-btn {
+            display: inline-block;
+            background-color: var(--seaweed);
+            color: var(--shell);
+            text-decoration: none;
+            padding: 16px 32px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease, outline 0.1s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header-btn {
+            background-color: var(--kelp); 
+            color: var(--seaweed); 
+            text-decoration: none; 
+            padding: 14px 28px; 
+            font-size: 1.125rem; 
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease, outline 0.1s ease;
+            display: inline-block; 
+            white-space: nowrap; /* Prevents text from wrapping awkwardly */
+        }
+
+        /* --- UNIFIED BUTTON HOVER/FOCUS STYLES --- */
+        .luma-btn:focus, .luma-btn:hover,
+        .header-btn:focus, .header-btn:hover {
+            background-color: var(--oyster); 
+            color: var(--seaweed); 
+            transform: translateY(-2px);
+            outline: 3px solid var(--ocean);
+            outline-offset: 2px;
+        }
+
+        /* --- MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 600px) {
+            body { 
+                padding-top: 110px; /* Reduced so content isn't pushed down too far */
+            }
+            
+            header { 
+                padding: 0 15px; /* Tighter side padding */
+                height: 80px; /* Slightly shorter initial header */
+            }
+            
+            header.shrunk { 
+                height: 60px; 
+            }
+            
+            .brand-logo { 
+                height: 30px; /* Scale logo down natively on mobile */
+            }
+            
+            header.shrunk .brand-logo {
+                height: 22px;
+            }
+
+            .header-btn {
+                padding: 10px 16px; /* Shrink button size */
+                font-size: 0.9rem; /* Shrink button text */
+            }
+
+            .event-title { 
+                font-size: 1.75rem; /* Better scale for mobile reading */
+            }
+            
+            .event-description { 
+                font-size: 1rem; 
+                margin-bottom: 24px;
+            }
+            
+            main, footer { 
+                padding: 30px 20px; 
+                width: 92%; /* Gives a slightly wider usable area on narrow screens */
+            }
+        }
+
+        /* Extra small devices (like iPhone SE) */
+        @media (max-width: 380px) {
+            .header-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .brand-logo { 
+                height: 24px;
+            }
+            .event-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer" id="bg-layer"></div>
+
+    <header id="site-header" role="banner" aria-label="Main navigation">
+        <a href="https://zerocircle.in" target="_blank" rel="noopener noreferrer" aria-label="Zerocircle Home">
+            <img src="zc_logo.png" alt="Zerocircle Logo" class="brand-logo">
+        </a>
+        
+        <a href="https://luma.com/2bh8s4sv" class="header-btn" target="_blank" rel="noopener noreferrer">RSVP on Luma</a>
+    </header>
+
+    <main id="main-content" role="main">
+        <h2 class="event-title">See Matter: Material Conversations for the Future
+</h2>
+        <p class="event-description">
+            <b>See Matter</b> is a private gathering convened by <b>Zerocircle</b>, bringing together leaders across materials, industry, and capital. A focused conversation on moving beyond plastic and building the next generation of material systems.
+        </p>
+
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube-nocookie.com/embed/-mzNkl9RQvI" 
+                title="Zerocircle: Beyond Plastics" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </main>
+
+    <footer id="main-footer" role="contentinfo">
+        <p class="cta-subtext">We will love to have you there</p>
+        
+        <a href="https://luma.com/2bh8s4sv" class="luma-btn" target="_blank" rel="noopener noreferrer" aria-label="Register for the event on Luma (Opens in a new tab)">Secure Your Spot</a>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Fade in the background image immediately
+            const bgLayer = document.getElementById('bg-layer');
+            setTimeout(() => {
+                bgLayer.classList.add('visible');
+            }, 50);
+
+            // 2. Fade in the main content and footer cards
+            const mainContent = document.getElementById('main-content');
+            const mainFooter = document.getElementById('main-footer');
+            
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                mainFooter.classList.add('visible');
+            }, 100);
+
+            // 3. Shrink the header when scrolling down
+            const header = document.getElementById('site-header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('shrunk');
+                } else {
+                    header.classList.remove('shrunk');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
