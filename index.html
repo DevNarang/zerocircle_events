@@ -45,7 +45,7 @@
             left: 0; 
             width: 100vw; 
             height: 100vh;
-            background-image: url('bi.jpg'); 
+            background-image: url('./background-image.jpg'); 
             background-size: cover;
             background-position: center;
             z-index: -1;
@@ -53,7 +53,6 @@
             transition: opacity 2s ease-in-out;
         }
 
-        /* A subtle dark tint over the image so the bright cards pop more */
         .bg-layer::after {
             content: '';
             position: absolute;
@@ -63,6 +62,52 @@
 
         .bg-layer.visible {
             opacity: 1;
+        }
+
+        /* --- LINKEDIN BUTTON --- */
+        .linkedin-container {
+            margin-bottom: 40px; 
+        }
+
+        .linkedin-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* NEW: Adds space between the icon and text */
+            background-color: transparent;
+            color: var(--seaweed); 
+            text-decoration: none;
+            padding: 12px 28px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 4px;
+            border: 2px solid var(--seaweed);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* NEW: Ensures the SVG scales correctly and matches the text color */
+        .linkedin-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor; 
+            transition: fill 0.3s ease;
+        }
+
+        .linkedin-btn:hover, .linkedin-btn:focus {
+            background-color: var(--ocean);
+            color: var(--shell);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(12, 0, 255, 0.15);
+            outline: none;
+        }
+
+        /* Fills in with solid blue on hover */
+        .linkedin-btn:hover, .linkedin-btn:focus {
+            background-color: var(--shell);
+            color: var(--fossil);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(12, 0, 255, 0.15);
+            outline: none;
         }
 
         /* Frosted Glass Header */
@@ -100,10 +145,9 @@
             padding: 50px 30px;
             max-width: 800px;
             width: 90%;
-            box-sizing: border-box; /* Added to prevent overflow */
+            box-sizing: border-box;
             margin: 0 auto 40px;
             
-            /* Glassmorphism card styling */
             background-color: rgba(255, 250, 242, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -158,6 +202,115 @@
             border: none; 
         }
 
+        /* --- NEW: PARTNER / TRUSTED BY SECTION --- */
+        .trusted-by {
+            background-color: rgba(255, 250, 242, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            box-sizing: border-box;
+            margin: 0 auto 40px;
+            
+            /* Animation timing staggered slightly after main content */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out 0.7s, transform 1s ease-out 0.7s;
+        }
+
+        .trusted-by.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .trusted-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--seaweed);
+            opacity: 0.8;
+        }
+
+        /* --- THE SLIDER CSS WITH FADE MASK --- */
+        .logo-slider {
+            width: 100%;
+            overflow: hidden;
+            /* This applies the transparent fade edges */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+
+        .logo-track {
+            display: flex;
+            width: max-content;
+            animation: scroll 90s linear infinite; 
+        }
+
+        .logo-track:hover {
+            animation-play-state: paused;
+        }
+
+        .slide {
+            width: 180px; /* Slightly wider to fit the new boxes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px; /* Spacing between the white boxes */
+        }
+
+        /* The new white container */
+        .logo-box {
+            background-color: #FFFFFF;
+            border-radius: 12px; /* The rounded edges */
+            width: 100%;
+            height: 80px; /* Uniform height for all boxes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow so they pop */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Keeps logos proportional */
+            mix-blend-mode: multiply; /* Magically blends white image backgrounds with the white box */
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Hover effect moves the whole box up slightly */
+        .logo-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-box:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .slide img:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* Footer - Also converted to a Glass Card */
         footer {
             background-color: rgba(255, 250, 242, 0.85);
@@ -169,12 +322,12 @@
             padding: 30px;
             max-width: 400px;
             width: 90%;
-            box-sizing: border-box; /* Added to prevent overflow */
+            box-sizing: border-box; 
             margin: 0 auto 60px;
             
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 1s ease-out 0.8s, transform 1s ease-out 0.8s;
+            transition: opacity 1s ease-out 0.9s, transform 1s ease-out 0.9s;
         }
         
         footer.visible {
@@ -228,7 +381,7 @@
             border-radius: 4px;
             transition: background-color 0.3s ease, transform 0.2s ease, outline 0.1s ease;
             display: inline-block; 
-            white-space: nowrap; /* Prevents text from wrapping awkwardly */
+            white-space: nowrap;
         }
 
         /* --- UNIFIED BUTTON HOVER/FOCUS STYLES --- */
@@ -244,47 +397,43 @@
         /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 600px) {
             body { 
-                padding-top: 110px; /* Reduced so content isn't pushed down too far */
+                padding-top: 110px; 
             }
-            
             header { 
-                padding: 0 15px; /* Tighter side padding */
-                height: 80px; /* Slightly shorter initial header */
+                padding: 0 15px; 
+                height: 80px; 
             }
-            
             header.shrunk { 
                 height: 60px; 
             }
-            
             .brand-logo { 
-                height: 30px; /* Scale logo down natively on mobile */
+                height: 30px; 
             }
-            
             header.shrunk .brand-logo {
                 height: 22px;
             }
-
             .header-btn {
-                padding: 10px 16px; /* Shrink button size */
-                font-size: 0.9rem; /* Shrink button text */
+                padding: 10px 16px; 
+                font-size: 0.9rem; 
             }
-
             .event-title { 
-                font-size: 1.75rem; /* Better scale for mobile reading */
+                font-size: 1.75rem; 
             }
-            
             .event-description { 
                 font-size: 1rem; 
                 margin-bottom: 24px;
             }
-            
-            main, footer { 
+            main, footer, .trusted-by { 
                 padding: 30px 20px; 
-                width: 92%; /* Gives a slightly wider usable area on narrow screens */
+                width: 92%; 
+            }
+            /* Adjust mask for smaller screens to ensure logos aren't hidden too fast */
+            .logo-slider {
+                -webkit-mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
+                mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
             }
         }
 
-        /* Extra small devices (like iPhone SE) */
         @media (max-width: 380px) {
             .header-btn {
                 padding: 8px 12px;
@@ -312,8 +461,7 @@
     </header>
 
     <main id="main-content" role="main">
-        <h2 class="event-title">See Matter: Material Conversations for the Future
-</h2>
+        <h2 class="event-title">See Matter: Material Conversations for the Future</h2>
         <p class="event-description">
             <b>See Matter</b> is a private gathering convened by <b>Zerocircle</b>, bringing together leaders across materials, industry, and capital. A focused conversation on moving beyond plastic and building the next generation of material systems.
         </p>
@@ -326,8 +474,75 @@
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
             </iframe>
+
+        </div>
+
+        <div class="linkedin-container" style="margin-top: 40px; margin-bottom: 0;">
+            <a href="https://www.linkedin.com/company/zerocircle/" target="_blank" rel="noopener noreferrer" class="linkedin-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                Follow us on LinkedIn
+            </a>
         </div>
     </main>
+    
+    <section class="trusted-by" id="trusted-by">
+        <h3 class="trusted-title">Trusted By</h3>
+        <div class="logo-slider">
+            <div class="logo-track">
+                
+                <div class="slide"><div class="logo-box"><img src="./logo_Zomato_logo.png" alt="Zomato"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_1crowd_logo.png" alt="1crowd"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_3one4_logo.png" alt="3one4"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_7G_logo.png" alt="7G"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Bangur_logo.png" alt="Bangur"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Capgemini_logo.png" alt="Capgemini"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_EcoDispo_logo.png" alt="EcoDispo"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_IncubationNetwork_logo.png" alt="Incubation Network"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Intertek_logo.png" alt="Intertek"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_LonelyWhale_logo.png" alt="Lonely Whale"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Marico Innovation Foundation_logo.png" alt="Marico Innovation Foundation"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Ministry of Science and Technology_logo.png" alt="Ministry of Science and Technology"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_MoEFCC_logo.png" alt="MoEFCC"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_NBA_logo.png" alt="NBA"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Peakst8_logo.png" alt="Peakst8"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Rainmatter_logo.png" alt="Rainmatter"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Schmancy_logo.png" alt="Schmancy"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Sequoia_logo.png" alt="Sequoia"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Swiggy_logo.png" alt="Swiggy"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_TomFord_logo.png" alt="Tom Ford"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_TUV_logo.png" alt="TUV"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_UNIDO_logo.png" alt="UNIDO"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Wageningen_logo.png" alt="Wageningen"></div></div>
+
+                <div class="slide"><div class="logo-box"><img src="./logo_Zomato_logo.png" alt="Zomato"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_1crowd_logo.png" alt="1crowd"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_3one4_logo.png" alt="3one4"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_7G_logo.png" alt="7G"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Bangur_logo.png" alt="Bangur"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Capgemini_logo.png" alt="Capgemini"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_EcoDispo_logo.png" alt="EcoDispo"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_IncubationNetwork_logo.png" alt="Incubation Network"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Intertek_logo.png" alt="Intertek"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_LonelyWhale_logo.png" alt="Lonely Whale"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Marico Innovation Foundation_logo.png" alt="Marico Innovation Foundation"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Ministry of Science and Technology_logo.png" alt="Ministry of Science and Technology"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_MoEFCC_logo.png" alt="MoEFCC"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_NBA_logo.png" alt="NBA"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Peakst8_logo.png" alt="Peakst8"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Rainmatter_logo.png" alt="Rainmatter"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Schmancy_logo.png" alt="Schmancy"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Sequoia_logo.png" alt="Sequoia"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Swiggy_logo.png" alt="Swiggy"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_TomFord_logo.png" alt="Tom Ford"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_TUV_logo.png" alt="TUV"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_UNIDO_logo.png" alt="UNIDO"></div></div>
+                <div class="slide"><div class="logo-box"><img src="./logo_Wageningen_logo.png" alt="Wageningen"></div></div>
+                
+            </div>
+        </div>
+    </section>
 
     <footer id="main-footer" role="contentinfo">
         <p class="cta-subtext">We will love to have you there</p>
@@ -343,12 +558,14 @@
                 bgLayer.classList.add('visible');
             }, 50);
 
-            // 2. Fade in the main content and footer cards
+            // 2. Fade in the cards with staggered timing
             const mainContent = document.getElementById('main-content');
+            const trustedBy = document.getElementById('trusted-by');
             const mainFooter = document.getElementById('main-footer');
             
             setTimeout(() => {
                 mainContent.classList.add('visible');
+                trustedBy.classList.add('visible');
                 mainFooter.classList.add('visible');
             }, 100);
 
